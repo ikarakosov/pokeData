@@ -22,6 +22,17 @@ def __repl__(self):
 def index():
     return render_template("index.html")
 
+@app.route('/posts')
+def posts():
+    articles = Article.query.order_by(Article.id).all()
+    return render_template("posts.html", articles=articles)
+
+@app.route('/posts/<int:id>')
+def post_detail(id):
+    article = Article.query.get(id)
+    return render_template("post_detail.html", article=article)
+
+
 @app.route('/create', methods=['POST', 'GET'])
 def about():
     if request.method == 'POST':
@@ -31,7 +42,7 @@ def about():
         try:
             db.session.add(article)
             db.session.commit()
-            return redirect('/')
+            return redirect('/posts')
         except:
             return 'Error adding'
 
