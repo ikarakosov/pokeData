@@ -1,9 +1,10 @@
 # Python 3 server example
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import time
+import os
 
 hostName = "127.0.0.1"
-serverPort = 8080
+serverPort = int(os.environ.get("PORT"))
 
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
